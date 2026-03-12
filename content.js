@@ -6,7 +6,7 @@ let overlayVisible = false;
 
 // Helper to check if the extension context is still valid
 function isContextValid() {
-  return typeof chrome !== 'undefined' && chrome.runtime && !!chrome.runtime.id;
+  return typeof browser !== 'undefined' && browser.runtime && !!browser.runtime.id;
 }
 
 // Improved function to find the active video element
@@ -118,19 +118,22 @@ function showOverlay() {
     else if (host.includes('instagram.com')) window.location.href = 'https://www.instagram.com/';
   });
 
-  document.getElementById('reelscap-extend')?.addEventListener('click', () => {
+  document.getElementById('reelscap-extend')?.addEventListener('click', async () => {
     if (!isContextValid()) {
       alert("Extension updated. Please refresh the page.");
       return;
     }
-    chrome.runtime.sendMessage({ type: 'EXTEND_LIMIT' }, (response) => {
+    try {
+      const response = await browser.runtime.sendMessage({ type: 'EXTEND_LIMIT' });
       if (response && response.success) {
         localLimit = response.newLimit;
         overlay.remove();
         overlayVisible = false;
         showToast(localCount, localLimit);
       }
-    });
+    } catch (e) {
+      console.error("ReelsCap: Failed to extend limit", e);
+    }
   });
 }
 
@@ -150,7 +153,7 @@ function showToast(count, limit) {
 async function updateStatus() {
   if (!isContextValid()) return;
   try {
-    const response = await chrome.runtime.sendMessage({ type: 'GET_STATUS' });
+    const response = await browser.runtime.sendMessage({ type: 'GET_STATUS' });
     if (response) {
       localCount = response.count;
       localLimit = response.limit;
@@ -170,7 +173,7 @@ async function handleVideoChange() {
     lastVideoId = currentId;
     
     try {
-      const response = await chrome.runtime.sendMessage({ type: 'INCREMENT_COUNT' });
+      const response = await browser.runtime.sendMessage({ type: 'INCREMENT_COUNT' });
       if (response) {
         localCount = response.count;
         localLimit = response.limit;
@@ -204,7 +207,7 @@ if (isContextValid()) {
     setInterval(handleVideoChange, 1000);
   });
 
-  chrome.runtime.onMessage.addListener((message) => {
+  browser.runtime.onMessage.addListener((message) => {
     if (message.type === 'COUNT_UPDATED') {
       localCount = message.count;
       localLimit = message.limit;

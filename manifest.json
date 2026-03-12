@@ -22,8 +22,13 @@
         "*://*.tiktok.com/*",
         "*://*.instagram.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["browser-polyfill.js", "content.js"],
       "css": ["style.css"]
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "reelscap@example.com"
+    }
+  }
 }

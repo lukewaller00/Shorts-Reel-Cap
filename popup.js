@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const trackTt = document.getElementById('track-tt');
 
   // Load current settings
-  chrome.storage.local.get(['limit', 'count', 'tracking'], (result) => {
+  browser.storage.local.get(['limit', 'count', 'tracking']).then((result) => {
     const limit = result.limit || 30;
     const count = result.count || 0;
     const tracking = result.tracking || { youtube: true, instagram: true, tiktok: true };
@@ -33,21 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
       tiktok: trackTt.checked
     };
 
-    chrome.storage.local.set({ limit: newLimit, tracking: tracking }, () => {
+    browser.storage.local.set({ limit: newLimit, tracking: tracking }).then(() => {
       alert('Settings saved!');
-      chrome.storage.local.get(['count'], (result) => {
-        const count = result.count || 0;
-        updateUI(count, newLimit);
-      });
+      return browser.storage.local.get(['count']);
+    }).then((result) => {
+      const count = result.count || 0;
+      updateUI(count, newLimit);
     });
   });
 
   resetBtn.addEventListener('click', () => {
-    chrome.storage.local.set({ count: 0 }, () => {
-      chrome.storage.local.get(['limit'], (result) => {
-        const limit = result.limit || 30;
-        updateUI(0, limit);
-      });
+    browser.storage.local.set({ count: 0 }).then(() => {
+      return browser.storage.local.get(['limit']);
+    }).then((result) => {
+      const limit = result.limit || 30;
+      updateUI(0, limit);
     });
   });
 
