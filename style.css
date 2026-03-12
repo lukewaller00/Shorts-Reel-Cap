@@ -1,0 +1,97 @@
+#reelscap-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  color: white;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#reelscap-overlay-content {
+  background: #111;
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid #333;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  max-width: 400px;
+}
+
+#reelscap-overlay h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ff0000;
+}
+
+#reelscap-overlay p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.reelscap-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+#reelscap-overlay button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+#reelscap-overlay button:active {
+  transform: scale(0.95);
+}
+
+.stop-btn {
+  background-color: #333;
+}
+
+.stop-btn:hover {
+  background-color: #555;
+}
+
+.extend-btn {
+  background-color: #ff0000;
+}
+
+.extend-btn:hover {
+  background-color: #cc0000;
+}
+
+#reelscap-overlay button:hover {
+  background-color: #cc0000;
+}
+
+#reelscap-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  z-index: 2147483647;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#reelscap-toast.visible {
+  opacity: 1;
+}

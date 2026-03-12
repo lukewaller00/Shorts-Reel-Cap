@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReelsCap Settings</title>
+  <style>
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #1a1a1a;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      text-align: center;
+      flex-grow: 1;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      color: #555;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .info-icon {
+      margin-left: 6px;
+      color: #888;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    h3 {
+      font-size: 1rem;
+      margin: 0 0 15px 0;
+    }
+    .progress-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .circular-progress {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(#4caf50 0%, #eee 0%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .circular-progress::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      border-radius: 50%;
+    }
+    .progress-value {
+      position: relative;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    .status-text {
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 20px;
+      min-height: 2.4em;
+    }
+    .platforms {
+      margin-bottom: 20px;
+    }
+    .platform-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+    .platform-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .platform-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #333;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    button {
+      flex: 1;
+      padding: 12px;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: background-color 0.2s;
+    }
+    #save {
+      background-color: #ff0000;
+    }
+    #save:hover { background-color: #cc0000; }
+    #reset {
+      background-color: #555;
+    }
+    #reset:hover { background-color: #333; }
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div style="width: 24px;"></div> <h2>ReelsCap</h2>
+      <button class="icon-btn" title="Settings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </div>
+
+    <label for="limit">Unified Daily Limit: 
+      <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    </label>
+    <input type="number" id="limit" min="1" value="30">
+
+    <h3>Today's Progress</h3>
+    <div class="progress-section">
+      <div class="circular-progress" id="circular-bar">
+        <span class="progress-value" id="progress-text">0 / 30</span>
+      </div>
+      <div class="status-text" id="status-message">
+        Current Status: Watch more responsibly! <strong>30 left</strong>
+      </div>
+    </div>
+
+    <h3>Platforms Tracked</h3>
+    <div class="platforms">
+      <div class="platform-row">
+        <div class="platform-name">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+          YouTube Shorts
+        </div>
+        <div class="platform-status">
+          <input type="checkbox" id="track-yt" checked>
+          <label for="track-yt" style="margin:0; font-weight:normal;">Active</label>
+        </div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-name">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          Instagram Reels
+        </div>
+        <div class="platform-status">
+          <input type="checkbox" id="track-ig" checked>
+          <label for="track-ig" style="margin:0; font-weight:normal;">Active</label>
+        </div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-name">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+          TikTok
+        </div>
+        <div class="platform-status">
+          <input type="checkbox" id="track-tt" checked>
+          <label for="track-tt" style="margin:0; font-weight:normal;">Active</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="save">Save Settings</button>
+      <button id="reset">Reset Count</button>
+    </div>
+
+    <div class="footer-note">Limit is unified across all active platforms.</div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

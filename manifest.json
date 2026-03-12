@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "ReelsCap - Social Video Limiter",
+  "version": "1.1",
+  "description": "Cap the number of YouTube Shorts, TikToks, and Instagram Reels you can watch per day.",
+  "permissions": ["storage", "webNavigation", "tabs"],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.instagram.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.tiktok.com/*",
+        "*://*.instagram.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
