@@ -100,49 +100,52 @@ function showOverlay() {
   overlayVisible = true;
   pauseVideo();
 
-  const overlay = document.createElement('div');
-  overlay.id = 'reelscap-overlay';
-  overlay.innerHTML = `
-    <div id="reelscap-overlay-content">
-      <h1 style="color: #ff0000; font-size: 2.5rem; margin-bottom: 10px;">LIMIT REACHED</h1>
-      <p style="font-size: 1.2rem; margin-bottom: 5px;">You have watched <strong>${localCount}</strong> videos today.</p>
-      <p style="font-size: 1rem; margin-bottom: 25px; opacity: 0.8;">Your current daily allowance is <strong>${localLimit}</strong>.</p>
-      
-      <div class="reelscap-buttons">
-        <button id="reelscap-dismiss" class="stop-btn">Stop Scrolling (Exit)</button>
-        <button id="reelscap-extend" class="extend-btn">Continue Scrolling (+10 Allowance)</button>
+  browser.storage.local.get(['extensionIncrement']).then((result) => {
+    const increment = result.extensionIncrement || 10;
+    const overlay = document.createElement('div');
+    overlay.id = 'reelscap-overlay';
+    overlay.innerHTML = `
+      <div id="reelscap-overlay-content">
+        <h1 style="color: #ff0000; font-size: 2.5rem; margin-bottom: 10px;">LIMIT REACHED</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 5px;">You have watched <strong>${localCount}</strong> videos today.</p>
+        <p style="font-size: 1rem; margin-bottom: 25px; opacity: 0.8;">Your current daily allowance is <strong>${localLimit}</strong>.</p>
+        
+        <div class="reelscap-buttons">
+          <button id="reelscap-dismiss" class="stop-btn">Stop Scrolling (Exit)</button>
+          <button id="reelscap-extend" class="extend-btn">Continue Scrolling (+${increment} Allowance)</button>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  document.body.appendChild(overlay);
+    document.body.appendChild(overlay);
 
-  document.getElementById('reelscap-dismiss')?.addEventListener('click', () => {
-    overlay.remove();
-    overlayVisible = false;
-    const host = window.location.host;
-    if (host.includes('youtube.com')) window.location.href = 'https://www.youtube.com/';
-    else if (host.includes('tiktok.com')) window.location.href = 'https://www.tiktok.com/explore';
-    else if (host.includes('instagram.com')) window.location.href = 'https://www.instagram.com/';
-    else if (host.includes('facebook.com')) window.location.href = 'https://www.facebook.com/';
-  });
+    document.getElementById('reelscap-dismiss')?.addEventListener('click', () => {
+      overlay.remove();
+      overlayVisible = false;
+      const host = window.location.host;
+      if (host.includes('youtube.com')) window.location.href = 'https://www.youtube.com/';
+      else if (host.includes('tiktok.com')) window.location.href = 'https://www.tiktok.com/explore';
+      else if (host.includes('instagram.com')) window.location.href = 'https://www.instagram.com/';
+      else if (host.includes('facebook.com')) window.location.href = 'https://www.facebook.com/';
+    });
 
-  document.getElementById('reelscap-extend')?.addEventListener('click', async () => {
-    if (!isContextValid()) {
-      alert("Extension updated. Please refresh the page.");
-      return;
-    }
-    try {
-      const response = await browser.runtime.sendMessage({ type: 'EXTEND_LIMIT' });
-      if (response && response.success) {
-        localLimit = response.newLimit;
-        overlay.remove();
-        overlayVisible = false;
-        showToast(localCount, localLimit);
+    document.getElementById('reelscap-extend')?.addEventListener('click', async () => {
+      if (!isContextValid()) {
+        alert("Extension updated. Please refresh the page.");
+        return;
       }
-    } catch (e) {
-      console.error("ReelsCap: Failed to extend limit", e);
-    }
+      try {
+        const response = await browser.runtime.sendMessage({ type: 'EXTEND_LIMIT' });
+        if (response && response.success) {
+          localLimit = response.newLimit;
+          overlay.remove();
+          overlayVisible = false;
+          showToast(localCount, localLimit);
+        }
+      } catch (e) {
+        console.error("ReelsCap: Failed to extend limit", e);
+      }
+    });
   });
 }
 
