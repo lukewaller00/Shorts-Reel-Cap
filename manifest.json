@@ -7,20 +7,22 @@
   "host_permissions": [
     "*://*.youtube.com/*",
     "*://*.tiktok.com/*",
-    "*://*.instagram.com/*"
+    "*://*.instagram.com/*",
+    "*://*.facebook.com/*"
   ],
   "action": {
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["browser-polyfill.js", "background.js"]
   },
   "content_scripts": [
     {
       "matches": [
         "*://*.youtube.com/*",
         "*://*.tiktok.com/*",
-        "*://*.instagram.com/*"
+        "*://*.instagram.com/*",
+        "*://*.facebook.com/*"
       ],
       "js": ["browser-polyfill.js", "content.js"],
       "css": ["style.css"]

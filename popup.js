@@ -10,17 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const trackYt = document.getElementById('track-yt');
   const trackIg = document.getElementById('track-ig');
   const trackTt = document.getElementById('track-tt');
+  const trackFb = document.getElementById('track-fb');
 
   // Load current settings
   browser.storage.local.get(['limit', 'count', 'tracking']).then((result) => {
     const limit = result.limit || 30;
     const count = result.count || 0;
-    const tracking = result.tracking || { youtube: true, instagram: true, tiktok: true };
+    const tracking = result.tracking || { youtube: true, instagram: true, tiktok: true, facebook: true };
     
     limitInput.value = limit;
     trackYt.checked = tracking.youtube !== false;
     trackIg.checked = tracking.instagram !== false;
     trackTt.checked = tracking.tiktok !== false;
+    trackFb.checked = tracking.facebook !== false;
     
     updateUI(count, limit);
   });
@@ -30,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tracking = {
       youtube: trackYt.checked,
       instagram: trackIg.checked,
-      tiktok: trackTt.checked
+      tiktok: trackTt.checked,
+      facebook: trackFb.checked
     };
 
     browser.storage.local.set({ limit: newLimit, tracking: tracking }).then(() => {
@@ -77,4 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     circularBar.style.background = `conic-gradient(${color} ${degrees}deg, #eee ${degrees}deg)`;
   }
+
+  // Auto-update UI when storage changes (e.g., from content script incrementing count)
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local') {
+      browser.storage.local.get(['count', 'limit']).then((result) => {
+        updateUI(result.count || 0, result.limit || 30);
+      });
+    }
+  });
 });

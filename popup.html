@@ -6,16 +6,17 @@
   <title>ReelsCap Settings</title>
   <style>
     body {
-      width: 320px;
+      width: 310px;
       margin: 0;
-      padding: 15px;
+      padding: 10px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #f0f2f5;
       color: #1a1a1a;
+      overflow: hidden;
     }
     .card {
       background: white;
-      padding: 20px;
+      padding: 15px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
@@ -23,11 +24,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
     h2 {
       margin: 0;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       text-align: center;
       flex-grow: 1;
     }
@@ -43,8 +44,8 @@
       display: flex;
       align-items: center;
       font-weight: 600;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
     }
     .info-icon {
       margin-left: 6px;
@@ -52,67 +53,67 @@
     }
     input[type="number"] {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 6px;
-      margin-bottom: 20px;
-      font-size: 1rem;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
     }
     h3 {
-      font-size: 1rem;
-      margin: 0 0 15px 0;
+      font-size: 0.9rem;
+      margin: 0 0 10px 0;
     }
     .progress-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     .circular-progress {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       background: conic-gradient(#4caf50 0%, #eee 0%);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
     }
     .circular-progress::before {
       content: "";
       position: absolute;
-      width: 100px;
-      height: 100px;
+      width: 82px;
+      height: 82px;
       background-color: white;
       border-radius: 50%;
     }
     .progress-value {
       position: relative;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: bold;
     }
     .status-text {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-align: center;
-      margin-bottom: 20px;
-      min-height: 2.4em;
+      margin-bottom: 12px;
+      min-height: 1.2em;
     }
     .platforms {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
     .platform-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      font-size: 0.95rem;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
     }
     .platform-name {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .platform-status {
       display: flex;
@@ -122,18 +123,18 @@
     }
     .buttons {
       display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
     button {
       flex: 1;
-      padding: 12px;
+      padding: 10px;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: background-color 0.2s;
     }
     #save {
@@ -160,7 +161,7 @@
       </button>
     </div>
 
-    <label for="limit">Unified Daily Limit: 
+    <label for="limit">Daily limit: 
       <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
     </label>
     <input type="number" id="limit" min="1" value="30">
@@ -205,6 +206,16 @@
         <div class="platform-status">
           <input type="checkbox" id="track-tt" checked>
           <label for="track-tt" style="margin:0; font-weight:normal;">Active</label>
+        </div>
+      </div>
+      <div class="platform-row">
+        <div class="platform-name">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Facebook Reels
+        </div>
+        <div class="platform-status">
+          <input type="checkbox" id="track-fb" checked>
+          <label for="track-fb" style="margin:0; font-weight:normal;">Active</label>
         </div>
       </div>
     </div>

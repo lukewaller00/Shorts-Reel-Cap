@@ -1,6 +1,6 @@
 let localCount = 0;
 let localLimit = 30;
-let localTracking = { youtube: true, instagram: true, tiktok: true };
+let localTracking = { youtube: true, instagram: true, tiktok: true, facebook: true };
 let lastVideoId = '';
 let overlayVisible = false;
 
@@ -22,7 +22,7 @@ function getActiveVideo() {
     }
   }
   
-  if (host.includes('instagram.com')) {
+  if (host.includes('instagram.com') || host.includes('facebook.com')) {
     const videos = document.querySelectorAll('video');
     for (let v of videos) {
       const rect = v.getBoundingClientRect();
@@ -52,6 +52,12 @@ function getUniqueVideoId() {
     const parts = url.split(splitKey);
     return parts.length > 1 ? parts[1].split('/')[0].split('?')[0] : '';
   }
+
+  if (url.includes('facebook.com/reels/') || url.includes('facebook.com/reel/')) {
+    const splitKey = url.includes('/reels/') ? '/reels/' : '/reel/';
+    const parts = url.split(splitKey);
+    return parts.length > 1 ? parts[1].split('/')[0].split('?')[0] : '';
+  }
   
   return '';
 }
@@ -61,6 +67,7 @@ function getCurrentPlatform() {
   if (host.includes('youtube.com')) return 'youtube';
   if (host.includes('tiktok.com')) return 'tiktok';
   if (host.includes('instagram.com')) return 'instagram';
+  if (host.includes('facebook.com')) return 'facebook';
   return null;
 }
 
@@ -76,6 +83,7 @@ function isVideoPage() {
   if (host.includes('youtube.com') && url.includes('/shorts/')) return true;
   if (host.includes('tiktok.com')) return true;
   if (host.includes('instagram.com') && url.includes('/reel')) return true;
+  if (host.includes('facebook.com') && (url.includes('/reels/') || url.includes('/reel/'))) return true;
   return false;
 }
 
@@ -116,6 +124,7 @@ function showOverlay() {
     if (host.includes('youtube.com')) window.location.href = 'https://www.youtube.com/';
     else if (host.includes('tiktok.com')) window.location.href = 'https://www.tiktok.com/explore';
     else if (host.includes('instagram.com')) window.location.href = 'https://www.instagram.com/';
+    else if (host.includes('facebook.com')) window.location.href = 'https://www.facebook.com/';
   });
 
   document.getElementById('reelscap-extend')?.addEventListener('click', async () => {
@@ -157,7 +166,7 @@ async function updateStatus() {
     if (response) {
       localCount = response.count;
       localLimit = response.limit;
-      localTracking = response.tracking || { youtube: true, instagram: true, tiktok: true };
+      localTracking = response.tracking || { youtube: true, instagram: true, tiktok: true, facebook: true };
       if (localCount > localLimit && isTrackingEnabled()) showOverlay();
     }
   } catch (e) {

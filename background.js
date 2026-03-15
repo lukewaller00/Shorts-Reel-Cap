@@ -1,4 +1,6 @@
-importScripts('browser-polyfill.js');
+if (typeof importScripts === 'function') {
+  importScripts('browser-polyfill.js');
+}
 
 let lastUpdated = '';
 
@@ -23,7 +25,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
       return { 
         count: result.count || 0, 
         limit: result.limit || 30,
-        tracking: result.tracking || { youtube: true, instagram: true, tiktok: true }
+        tracking: result.tracking || { youtube: true, instagram: true, tiktok: true, facebook: true }
       };
     });
   } else if (message.type === 'INCREMENT_COUNT') {
